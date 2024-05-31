@@ -81,12 +81,50 @@ where $a \neq 0$
 
 # Operations that preserve convexity
 
+show that $C$ is obtained from simple convex sets (hyperplanes, halfspaces, norm balls, ...) by operations that preserve convexity
+
+* intersection
+* affine functions
+* perspective function
+* linear-fractional functions
+
 ## 2.3.1 Intersection
 
 if $S_\alpha$ is convex for every $\alpha \in \mathcal{A}$, then $\cap_{\alpha \in \mathcal{A}} S_\alpha$ is convex 
 
-a closed convex set $S$ is the intersection of all halfspaces that contain it: $$ S = \cap\{\mathcal{H} | \mathcal H \text{    halfspace}, S \subset \mathcal{H} \} $$
+(=the intersection of (any number of) convex sets is convex)
 
+a closed convex set $S$ is the intersection of all halfspaces that contain it: 
+
+$$S = \cap \{\mathcal{H} \vert \mathcal{H} \ \mathrm{halfspace}, S \subset \mathcal{H} \}$$
+
+**example**
+
+$$S = \left\{ x \in \mathbb{R}^m \mid |p(t)| \leq 1 \text{ for } |t| \leq \frac{\pi}{3} \right\},$$
+
+where $p(t) = \sum_{k=1}^{m} x_k \cos kt = x_1 \cos t + x_2 \cos 2t + \cdots + x_m \cos mt$
+
+$p(t)$는 row vector($\cos t, \cos 2t, ..., \cos mt$)와 column vector($x_1, x_2, ..., x_m$)의 곱이 된다.
+
+$t$는 구간($\vert t \vert \leq \pi/3$)에서 막 바뀐다. 근데 바뀌더라도 $\vert p(t) \vert \leq 1$을 만족하는 $x$를 모두 모아놓은 집합이 $S$이다.
+
+$m=2$일 경우
+
+$$p(t)=x_1 \cos t + x_2 \cos 2t$$
+
+![figure_02_13](/images/figure_02_13.png)
+
+figure 2.13 : $x_1, x_2$가 바뀜에 따라서 여러 가지 그림이 가능하다는 것을 보여주는 그림
+
+$t$가 고정되었다고 생각하면 $\vert p(t) \vert$는 $\vert a^T x \vert \leq 1$ 형태를 띈다.
+
+$a^Tx \leq 1 \ \mathrm{and} \ -a^Tx \leq 1$ 각각은 polyhedron이고 위는 밴드 모양을 띄운다.
+
+![figure_02_14_01](/images/figure_02_14_01.png)
+
+$t$를 바꾸면 계수들이 살짝 바뀌면서 위 식에서 $a$값이 바뀌게 된다. 그러면 다른 모양의 밴드가 만들어 진다. 그렇게 모든 상황에 대한 교집합인 $S$가 만들어진다.
+
+t를 고정했을 때 밴드가 된다 -> 이 밴드는 convex -> 아무리 많은(uncountably) intersection을 취해도 여전히 convex
 
 ## 2.3.2 Affine functions
 
