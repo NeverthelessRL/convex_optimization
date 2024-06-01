@@ -132,38 +132,134 @@ t를 고정했을 때 밴드가 된다 -> 이 밴드는 convex -> 아무리 많�
 
 Let $f$ be affine
 
-1. $f(S)$ is convex for any convex set $S \subseteq \mathbb{R}^n$  
-2. $f^{-1}(S)$ is convex for any convex set $S \subseteq \mathbb{R}^m$ 
+1. $f(S)=\{ f(x) \vert x \in S\}$ is convex for any convex set $S \subseteq \mathbb{R}^n$
+2. $f^{-1}(S) = \{ x \vert f(x) \in S \}$ is convex for any convex set $S \subseteq \mathbb{R}^m$ 
 
-**projection** : The ***projection*** of a convex set onto some of its coordinates is convex: if $S \subseteq \mathbb{R}^m \times \mathbb{R}^n$ is covex, then $$ T = \{x_1 \in \mathbb{R}^m | (x_1, x_2) \in S \text{ for some }x_2 \in \mathbb{R}^n \} $$ is convex.
+**1. 증명**
+
+$$
+\begin{align*}
+& y_1, y_2 \in f(S) \\
+& y_1 = f(x_1), \ x_1 \in S \\
+& y_2 = f(x_2), \ x_2 \in S  \\
+& x = \theta x_1 + (1-\theta)x_2 \rightarrow x \in S \\
+& \theta y_1 + (1-\theta) y_2 \in f(S), \  0 \leq \theta \leq 1 \\
+& \theta f(x_1) + (1-\theta)f(x_2) \\
+& = \theta Ax_1 + \theta b + (1-\theta)A x_2 + (1-\theta) b \\
+& = A(\theta x_1 + (1-\theta)x_2) + b \in f(S) \\
+& (\because x_1, x_2 \in S,\ S \text{ is convex, } 0 \leq \theta \leq 1)
+\end{align*}
+$$
+
+**example**
+* scaling : $f(x) = \alpha I x, \ \alpha I = A$
+* translation : $f(x) = x + b$
+* **projection** : The ***projection*** of a convex set onto some of its coordinates is convex: if $S \subseteq \mathbb{R}^m \times \mathbb{R}^n$ is covex, then
+$$T = \{x_1 \in \mathbb{R}^m | (x_1, x_2) \in S \text{ for some }x_2 \in \mathbb{R}^n \}$$
+
+is convex.
+
+> Projection. Let $V$ be a vector space and $U \subseteq V$ a subspace of $V$. A linear mapping $\pi : V \rightarrow U$ is called a *projection* if $\pi^2 = \pi \circ \pi = \pi$  
+
+* solution set of linear matrix inequality $\{ x \vert x_1A_1 + \cdots + x_mA_m \preceq B\}$ (with $A_i, B \in \mathbf{S}^p$)
+  * $0 \preceq B - \sum A_i x_i$ 하게 만드는 $x$를 모아놓은 집합
+  * LMI(linear Matrix Inequality), positive (semi)definite 식으로 inequality가 만들어지고 행렬들이 나오면 행렬들의 선형조합을 하는 그 계수들이 변수 $x$일 때 이 것을 LMI 라고 한다.
+* hyperbolic cone $\{ x \vert x^TPx \leq (c^Tx)^2, c^Tx \geq 0\}$ (with $P \in \mathbf{S}_{+}^n$)
 
 ## 2.3.3 Linear-fractional and perspeective functions
 
-**perspective function** : $P : \mathbb{R}^{n+1} \rightarrow \mathbb{R}^n$, with domain $\text{dom} P = \mathbb{R}^n \times \mathbb{R}_{++}$, as $P(z, t) = z/t$
+**perspective function** : $P : \mathbf{R}^{n+1} \rightarrow \mathbf{R}^n$, with domain $\mathbf{dom} P = \mathbf{R}^n \times \mathbf{R}_{++}$, as $P(z, t) = z/t$
+
+vector 를 $[x, t]^T \in \mathbf{R}^{n+1}$ ($x$ : column vector) 라고 할 때 맨 밑의 element $t$로 나누는 것. 그렇기 때문에 $\mathbf{R}_{++}$ 이 등장한 것이다.
 
 the following hold:  
-1. $P(C)$ is convex for any convex set $C \subset \text{dom} P$
-2. $P^{-1}(C)$ is convex for any convex set $C \subset \text{ran} P$
+1. $P(C)$ is convex for any convex set $C \subset \mathbf{dom} P$ (images)
+2. $P^{-1}(C)$ is convex for any convex set $C \subset \text{ran} P$ (inverse images)
 
-**linear-fractional function** : A ***linear-fractional function*** is formed by composing the perspective function with an affne function.
+![figure_02_15_01](/images/figure_02_15_01.png)
+
+**linear-fractional function** : $f : \mathbf{R}^n \rightarrow \mathbf{R}^m$
+
+$$f(x)=\frac{Ax+b}{c^Tx+d}, \ \ \ \mathbf{dom}f=\{ x \vert c^Tx + d > 0 \}$$
+
+images and inverse images of convex sets under linear-fractional functiosn are convex.
+
+* $A \in \mathbf{R}^{m \times n}$
+* $b \in \mathbf{R}^m$
+* $c \in \mathbf{R}^n$
+* $d \in \mathbf{R}$
+* $c^Tx + d \in \mathbf{R}$ : scalar
+  * 분모이므로 $\mathbf{dom}f=\{ x \vert c^Tx + d > 0 \}$
+* $Ax + b \in \mathbf{R}^{m}$ : column vector
+
+
+
+A **linear-fractional function** is formed by composing the perspective function with an affne function.
+
+$$g(x) = \begin{bmatrix} A \\ c^T \end{bmatrix} x + \begin{bmatrix} b \\ d \end{bmatrix},$$
+
+linear-fractional function $f$:
+
+$$f(x) = P(g(x))$$
 
 # 2.4 Generalized inequalities
 
 **proper cone** : A cone $K \subseteq \mathbb{R}^n$ is called a ***proper cone*** if it satisfies the following:
 
-- $K$ is convex
-- $K$ is closed
-- $K$ is ***solid***, which means it has nonempty interior.
-- $K$ is ***pointed***, which means that it contains no line 
+* $K$ is convex
+* $K$ is closed
+* $K$ is ***solid***, which means it has nonempty interior.
+* $K$ is ***pointed***, which means that it contains no line 
+
+**examples**
+
+* nonnegative orthant $K = \mathbf{R}_{+}^{n}=\{ x \in \mathbf{R}^n \vert x_i \geq 0, i = 1, ..., n \}$
+* positive semidefinite cone $K = \mathbf{S}_{+}^n$
+* nonnegative polynomials on $[0, 1]$:
+
+$$K = \{x \in \mathbf{R}^n \mid x_1 + x_2 t + \cdots + x_n t^{n-1} \geq 0 \text{ for } t \in [0,1] \},$$
+
+* 모든 $t \in [0, 1]$에 대해서 위 inequality를 만족하는 $x_1, x_2, ..., x_n$을 모아둔 column vector 집합을 $K$라 한다.
+* 앞에 모두 $\theta$를 곱한다. 이 $\theta$에 음수를 넣으면 inequality가 깨진다. -> line을 포함하지 않는다.
 
 **generalized inequalities**:
 
 Let $K$ be proper cone, then the partial ordering on $\mathbb{R}^n$ defined by
 
-$$ x \preceq_K y \iff y - x \in K$$ 
+$$x \preceq_K y \iff y - x \in K$$ 
 ![alt text](image.png)
-$$ x \prec_K \iff y - x \in \text{int }K$$
+$$ x \prec_K \iff y - x \in \mathbf{int}\ K$$
 ![alt text](image-4.png)
+
+$$0 \preceq_K y \iff y \in K$$
+
+$$
+x \preceq_K y \iff y-x \in K \iff y \in x + K
+$$
+* $y$는 $x$로부터 뻗어나가는 cone에 속한다.
+
+**partial ordering (↔ linear ordering)**
+
+Real line $\mathbf{R}$에서 두 원소 $x, y$를 뽑으면 $x \leq y$ 아니면 $y \leq x$이다.(linear ordering) 하지만 generalized inequalities에서는 그 것이 성립하지 않는다.(partial ordering)
+
+![section_02_04_01](/images/section_02_04_01.png)
+
+위와같이 $y \in x+K \iff x \preceq_K y$ 를 만족하지 않는다고 해서 (ex. $y_2$) $x \succeq_K y$를 만족하는 것이 아니다.
+
+**examples**
+
+* componentwise inequality ($K=\mathbf{R}_{+}^{n}$)
+$$x \preceq_{\mathbf{R}_{+}^{n}} y \iff x_i \leq y_i, \ \ \  i = 1, ..., n$$
+
+* matrix inequality ($K=\mathbf{S}_{+}^{n}$)
+
+$$
+\begin{align*}
+X \preceq_{\mathbf{S}_{+}^{n}} Y &\iff Y-X \ \text{positive semidefinite} \\
+&\iff Y - X \in \mathbf{S}_{+}^{n}
+\end{align*}
+$$
+
 ### Properties of generalized inequalities
 
 - $\preceq_K$ is preserved under addition: if $x \preceq_K y$ and $u \preceq_K v$, then $x + u \preceq_K y+v$
@@ -193,25 +289,82 @@ take $u$ and $b$ subject to $u, v < \epsilon / 2$
 ![alt text](image-7.png)
 ## 2.4.2 Minimum and minimal elements
 
+$\preceq_K$ is not in general a linear ordering: we can have $x \cancel{\preceq}_K y$ and $y \cancel{\preceq}_K x$
+
 **minimum** : $x \in S$ is the ***minimum*** element of $S$ (with respect to the generalized inequality $\preceq_K$) if for every $y \in S$ we have $x \preceq_K y$.
+
+* $S$에 관한 모든 원소보다 $x$가 $K$라는 cone에 관해서 같거나 작으면 $x$를 minimum element라 한다.
+* $S \subset x+K$
+  * $x \preceq_K y$ : $x$에 $K$를 더한 것 안에 $y$가 속한다. 근데 $y \in S$이므로 위가 성립한다. 이때 $x$를 minimum element of $S$라 한다.
+* unique
 
 **minimal** : $x \in S$ is a ***minimal*** element of $S$ (with respect to the generalized inequality $\preceq_K$) if $y \in S, y \preceq_K x$ only if $y = x$.
 
-A point $x \in S$ is the minimum element of $S$ if and only if $$ S \subseteq \{y | x \preceq_K y\} = x+K$$
+A point $x \in S$ is the minimum element of $S$ if and only if 
+
+$$S \subseteq \{y | x \preceq_K y\} = x+K$$
 
 A point $x \in S$ is a minimal element if and only if
-$$ x-K = \{y|y\preceq_Kx\} \cap S = \{x\} $$
-![alt text](image-8.png)
+$$ x-K = \{y|y\preceq_Kx\} \cap S = \{x\}$$
+
+* non-unique
+
+**example** ($K=\mathbf{R}_{+}^{2}$)
+
+![figure_02_17](/images/figure_02_17_01.png)
+
+* $K$는 nonnegative orthant
+* left : $x_1$에 $K$를 더한 영역이 $S_1$이 포함되므로 $x_1$은 $S_1$의 minimum point
+* right : 음영 구역을 $-K$라 생각하면 $(x-K) \cap S$ 는 $x_2$ 하나가 남는다. 이 점이 minimal point이다.
+  * $x_2$ 에서 $K$ 방향으로 움직이면 어떤 $S_2$의 원소가 있어서 $K$ 방향으로는 $x_2$가 제일 작다. $K$ 방향이 아닌 것들과는 비교하지 않는다.(ordering이 성립하지 않으므로)
+* minimum은 $S$에 속하는 모든 원소에 대해 ordering이 성립하고 제일 작아야 하고, minimal은 ordering이 성립하는 것들 중에서 제일 작으면 minimal
+<!-- TODO : 위 내용은 애매하므로 나중에 수정 필요함 -->
+
 # 2.5 Separating and suppoting hyperplanes
 
 ## 2.5.1 Separating hyperplane theorem
 
 ### Seprating hyperplane theorem
- Suppose $C$ and $D$ are  nonempty disjoint convex sets, i.e., $C \cap D = \empty$. Then there exist $a \neq 0$ and $b$ such that $a^Tx \leq b$ for all $x \in C$ and $a^Tx \geq b$ for all $x \in D$.
 
+Suppose $C$ and $D$ are  nonempty disjoint convex sets, i.e., $C \cap D = \empty$. Then there exist $a \neq 0$ and $b$ such that $a^Tx \leq b$ for all $x \in C$ and $a^Tx \geq b$ for all $x \in D$.
 
+![figure_02_19](/images/figure_02_19.png)
+
+차수가 하나 낮은 걸로 둘로 가를 수 있다.
+
+역 : 어떤 separating hyperplane이 존재하면 $C, D$는 disjoint 하고 convex 한가? -> False
+
+* 반례 : $C = D = {0}$, $C, D$는 convex하고 disjoint하지 않지만 무수히 많은 separating hyperplane이 존재한다.
+
+![section_02_05_01](/images/section_02_05_01.png)
+
+If $C$ : open, then existence of separating hyperplane -> $C \cap D = \phi$ ($C, D$중 하나가 open 일 때 hyperplane이 존재하는 것이 $C$와 $D$가 disjoint하는 것을 의미하는가?)
+
+$f(x)=a^Tx-b=0$으로 hyperplane이 되는 $f(x)$를 잡았을 때 $f(x) \leq 0 \text{ on } C$, $f(x) \geq 0 \text{ on } D$이면 이것이 hyperplane이 될 것이다.
+
+여기서 $C$ 가 open이면 $f(x) < 0 \text{ on }C$ 로 등호가 빠지는 것을 보이면 증명이 끝난다. 왜냐하면 $D$에서는 0보다 크거나 같고 $C$에서는 0보다 작으니까 C와 D에서는 공유하는 원소가 하나도 없다
+
+**증명**
+
+만약 $f(x) < \text{ on } C$ 가 성립하지 않는다면 $f(x^{*})=0$ 를 만족하는 $x^{*}$가 $C$에 존재한다. 그런데 이 $f$는 affine function이고 $C$는 open이므로 $x^{*}$를 약간 perturbation해도 $C$에 속하게 할 수 있다.
+
+$x^{*}$를 약간 perturbation 했을 때 $a^T$ 방향(normal vector 방향)으로 perturbation하면
+
+$$f(x^{*} + \delta) > 0, \ \ x^{*} + \delta \in C$$
+
+가 되도로 할 수 있다. 이것은 $f(x) \leq 0$에 모순이다.
 
 **strict separation** : if the hyperplane satisfies the stronger condition that $a^Tx < b$ for all $x \in C$ and $a^Tx > b$ for all $x \in D$, This is called ***strict separation*** of the sets $C$ and $D$.
+
+strict separation requires additional assumptions (e.g. $C$ is closed, $D$ is a singleton)
+
+예를 들어 $C$가 closed, convex이고 $D$가 singleton $\{ x_0 \}$ 이고 $C, D$가 disjoint하면 strict seperation 하는 hyperplane이 존재한다
+
+그렇다면 $C, D$가 closed convex이고 disjoint하면 strict separating hyperplane이 존재할까? -> False
+
+반례
+
+![section_02_05_02](/images/section_02_05_02.png)
 
 ### Converse separating hyperplane theorems
 
@@ -223,10 +376,32 @@ $$ x-K = \{y|y\preceq_Kx\} \cap S = \{x\} $$
 
 **supporting hyperplanes** : Suppose $C \subseteq \mathbb{R^n}$, and $x_0$ is a point in its boundary. If $a\neq 0$ satisfies $a^Tx \leq a^Tx_0$ for all $x \in C$, then the hyperplane $\{x | a^Tx = a^Tx_0\}$ is called a ***supporting hyperplane*** to $C$ at the point $x_0$.
 
+![figure_02_21](/images/figure_02_21.png)
+
+hyperplane(affine set)의 한쪽 면에 $C$가 온전히 들어갈 수 있으면 해당 plane을 supporting hyperplane이라고 한다. separating hyperplane은 붙어도 되고 떨어져도 되는데 supporting hyperplane은 붙어있어야 한다.
+
+![section_02_05_03](/images/section_02_05_03.png)
+
+한 점에 대해 supporting hyperplane이 여러개일 수도 있다.
+
 ### Supporting hyperplane theorem
-for any nonempty convex set $C$, and any $x_0 \in \text{bd} C$, there exists a supporting hyperplane to $C$ at $x_0$
+
+for any nonempty convex set $C$, and any $x_0 \in \mathbf{bd} \ C$, there exists a supporting hyperplane to $C$ at $x_0$
+
+**증명**
+
+$\mathbf{int} \ C$가 공집합이라 하면 $\mathbf{R}^n$ 공간에서 적어도 $C$는 그것보다 한 차수 낮아야 한다. 그런데 $C$가 convex하므로 $C$를 포함하는 Affine set $A$를 잡을 수 있다. $C \subset A$, 납작하다는 뜻이다. $\mathbf{R}^n$ 공간에서 $C$는 interior가 없으니까 평면처럼 납작한 상태이다. 해당 평면의 모양은 convex일 것이다. 그렇다면 해당 affine set $A$가 supporting hyperplane이다. boundary에 있고 $C$를 온전히 포함한다.
+
+![section_02_05_04](/images/section_02_05_04.png)
+
+$\mathbf{int} \ C$가 공집합이 아니라면
+
+![section_02_05_05](/images/section_02_05_05.png)
+
+$\mathbf{int} \ C$ 와 $\{ x_0 \}$ 는 disjoint하고 $\mathbf{int} \ C$ 는 open convex set이고 $\{ x_0 \}$는 closed convex set이다. 그렇다면 separating hyperplane이 존재하는데 그것이 바로 support hyperplane이다.
 
 ### Partial converse of the supporting hyperplane theorem
+
 If a set is closed, has nonempty interior, and has a supporting hyerplane at every point in its boundary, then it is convex.
 
 # Dual cones and generalized inequalities
@@ -236,6 +411,54 @@ If a set is closed, has nonempty interior, and has a supporting hyerplane at eve
 Let $K$ be a cone. The set
 $$K^* = \{y | x^Ty \geq 0 \text{ for all } x \in K\} $$
 is called the ***dual cone*** of $K$.
+
+$K$라는 cone에 들어가는 모든 원소 $x$에 대해 inner product를 했을 때 0보다 같거나 큰 $y$를 모아둔 집합을 dual cone이라 한다.
+
+![section_02_05_06](/images/section_02_05_06.png)
+
+![section_02_05_07](/images/section_02_05_07.png)
+
+$K$가 not convex라 해도 dual cone $K^{*}$는 convex이다.
+
+$x^T y \geq \mathrm{const}, \forall x \in K \rightarrow x^T y \geq 0, \forall x \in K$
+
+$\mathrm{const}=-C, \ C > 0$이라면 $x^T y \geq -C$라는 의미가 된다. cone의 성질에 따라 임의의 양수 $\alpha$에 대해 $x \in K$이면 $\alpha x \in K$가 된다. 따라서 $x^T y \geq -C$는 $\alpha x \in K$에 대해서도 성립해야 한다. $\alpha (x^T y) \geq -C$ 에서 $\alpha$를 매우 크게 만들때 만약 $x^Ty$가 음수라면 매우 큰 음수가 되어 $-C$보다 크지 않기 때문에 만족하지 못하게 된다. 따라서 $x^Ty \geq 0$이 되어야 한다. 
+
+$K$가 cone이면 $x$에 어떤 작은 수를 곱해도 $x^T y \geq \mathrm{const}$가 성립해야 한다.
+
+**examples**
+
+* $V$ : subspace in $R^n$, $V^{*} = V^{\perp}$
+* $K = \mathbf{R}_{+}^{n}: \ K^{*} = \mathbf{R}_{+}^{n}$
+* $K = \mathbf{S}_{+}^{n}: \ K^{*} = \mathbf{S}_{+}^{n}$
+* $K=\{ (x,t) \vert \| x \|_2 \leq t \}: \  K^{*}=\{ (x,t) \vert \| x \|_2 \leq t \}$
+* $K=\{ (x,t) \vert \| x \|_1 \leq t \}: \  K^{*}=\{ (x,t) \vert \| x \|_\infty \leq t \}$
+
+**증명**
+
+$$K = \mathbf{R}_{+}^{n}: \ K^{*} = \mathbf{R}_{+}^{n}$$
+
+$x^Ty \geq 0, \ \forall x \succeq 0 \iff y \succeq 0$ 를 보이면 된다. $\forall x \succeq 0$ $K$에 속하는 모든 $x$에 대해서 내적을 취하면 0보다 크거나 같은 $y$는 모두 0보다 크거나 같다.
+
+만약 $y$의 벡터중 어떤 원소가 0보다 작다면 그 원소와 내적하는 $x$값을 매우 높이면 $x^Ty \geq 0$이 깨지게 될 것이다. 따라서 $y \succeq 0$이 될 수밖에 없다.
+
+$$K = \mathbf{S}_{+}^{n}: \ K^{*} = \mathbf{S}_{+}^{n}$$
+
+$X, Y \in \mathbf{S}_{+}^{n}$, 일때 내적은 $\mathbf{tr}(XY)$이다(정의).
+
+$\mathbf{tr}(XY) = \sum_{i,j=1}^n X_{ij} Y_{ij}$
+
+$\mathbf{tr}(XY) \geq 0, \ \  \forall X \succeq 0 \iff Y \succeq 0$ 을 보이면 된다.
+
+$(\Rightarrow)$ If $Y \notin \mathbf{S}_{+}^{n}, \ \exist q \text{ such that } q^TYq < 0$ 일 때 $\mathbf{tr}(XY)=\mathbf{tr}(YX)$이므로 $\mathbf{tr}(q^TYq)=\mathbf{tr}(qq^TY)$, $qq^T$를 $X \in  \mathbf{S}_{+}^{n}$로 보면 $\mathbf{tr}(XY) < 0$ 이 된다. 이는 모순이다.
+
+$(\Leftarrow)$ Let $Y \succeq 0 \text{ and } X \succeq 0$ 여기서 $X=\sum_{i=1}^n \lambda_i q_i q_i^T$ 
+
+$\mathbf{tr}(YX) = \mathbf{tr}(Y\sum \lambda_i q_i q_i^T) = \sum \lambda_i q_i^T Y q_i$
+
+$q_i^T Y q_i$가 scalar이므로 trace밖으로 나온다. $X$가 semidefinite 행렬이므로 $\lambda_i \geq 0$이다. 또한 $Y$ 도 semidefinite이므로 $\sum \lambda_i q_i^T Y q_i \geq 0$
+
+임의의 $Y, X$를 잡았을 때 $\mathbf{tr}(XY) \geq 0$ 을 만족시킴을 보임
 
 **Nonnegative orthant** : The cone $\mathbb{R}^n_+$ is its own dual:
 $$ x^Ty \geq 0 \text{ for all } x \succeq 0 \iff y \succeq 0.$$
