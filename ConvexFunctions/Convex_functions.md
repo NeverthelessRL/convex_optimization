@@ -224,7 +224,7 @@ $$f(x) + f^*(y) \geq x^T y$$
 
 ### Conjugate of the conjugate
 
-if $f$ is convex, and $f$ is closed (i.e., $\text{epi}f$ is a closed set;), then $f^{**} = f$. For example, if $\text{dom}f = \mathbb{R}^n$, then we have $f^{**} = f$, i.e., the conjugate of the conjugate of $f$ is $f$ again
+if $f$ is convex, and $f$ is closed (i.e., $\text{epi}f$ is a closed set;), then $f^{\ast \ast} = f$. For example, if $\text{dom}f = \mathbb{R}^n$, then we have $f^{\ast \ast} = f$, i.e., the conjugate of the conjugate of $f$ is $f$ again
 
 ### Differentiable functions
 

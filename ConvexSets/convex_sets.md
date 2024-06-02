@@ -287,6 +287,7 @@ Suppose that $x \prec_K x$ then $0 \in \text{int}K$ therefore there is $\epsilon
 take $u$ and $b$ subject to $u, v < \epsilon / 2$
 
 ![alt text](image-7.png)
+
 ## 2.4.2 Minimum and minimal elements
 
 $\preceq_K$ is not in general a linear ordering: we can have $x \cancel{\preceq}_K y$ and $y \cancel{\preceq}_K x$
@@ -320,11 +321,11 @@ $$ x-K = \{y|y\preceq_Kx\} \cap S = \{x\}$$
 * minimum은 $S$에 속하는 모든 원소에 대해 ordering이 성립하고 제일 작아야 하고, minimal은 ordering이 성립하는 것들 중에서 제일 작으면 minimal
 <!-- TODO : 위 내용은 애매하므로 나중에 수정 필요함 -->
 
-# 2.5 Separating and suppoting hyperplanes
+## 2.5 Separating and suppoting hyperplanes
 
-## 2.5.1 Separating hyperplane theorem
+### 2.5.1 Separating hyperplane theorem
 
-### Seprating hyperplane theorem
+#### Seprating hyperplane theorem
 
 Suppose $C$ and $D$ are  nonempty disjoint convex sets, i.e., $C \cap D = \empty$. Then there exist $a \neq 0$ and $b$ such that $a^Tx \leq b$ for all $x \in C$ and $a^Tx \geq b$ for all $x \in D$.
 
@@ -333,6 +334,8 @@ Suppose $C$ and $D$ are  nonempty disjoint convex sets, i.e., $C \cap D = \empty
 차수가 하나 낮은 걸로 둘로 가를 수 있다.
 
 역 : 어떤 separating hyperplane이 존재하면 $C, D$는 disjoint 하고 convex 한가? -> False
+
+$\varepsilon$
 
 * 반례 : $C = D = {0}$, $C, D$는 convex하고 disjoint하지 않지만 무수히 많은 separating hyperplane이 존재한다.
 
@@ -452,7 +455,7 @@ $\mathbf{tr}(XY) \geq 0, \ \  \forall X \succeq 0 \iff Y \succeq 0$ 을 보이�
 
 $(\Rightarrow)$ If $Y \notin \mathbf{S}_{+}^{n}, \ \exist q \text{ such that } q^TYq < 0$ 일 때 $\mathbf{tr}(XY)=\mathbf{tr}(YX)$이므로 $\mathbf{tr}(q^TYq)=\mathbf{tr}(qq^TY)$, $qq^T$를 $X \in  \mathbf{S}_{+}^{n}$로 보면 $\mathbf{tr}(XY) < 0$ 이 된다. 이는 모순이다.
 
-$(\Leftarrow)$ Let $Y \succeq 0 \text{ and } X \succeq 0$ 여기서 $X=\sum_{i=1}^n \lambda_i q_i q_i^T$ 
+$(\Leftarrow)$ Let $Y \succeq 0 \text{ and } X \succeq 0$ 여기서 $X=\sum_{i=1}^n \lambda_i q_i q_i^T$
 
 $\mathbf{tr}(YX) = \mathbf{tr}(Y\sum \lambda_i q_i q_i^T) = \sum \lambda_i q_i^T Y q_i$
 
@@ -464,23 +467,91 @@ $q_i^T Y q_i$가 scalar이므로 trace밖으로 나온다. $X$가 semidefinite �
 $$ x^Ty \geq 0 \text{ for all } x \succeq 0 \iff y \succeq 0.$$
 We call such a cone ***self-dual***
 
+## A.1.6 Dual norm
+
+$$\|z\|_{\ast} = \sup \{ z^T x \mid \|x\| \leq 1 \}.$$
+
+* $z^T x=z^T\frac{x}{\|x\|} \|x\| \leq \|z\|_{\ast} \|x\|$
+* $\|x\| \leq 1 \rightarrow z^T\frac{x}{\|x\|} \leq \|z\|_{\ast}$
+* $\text{tight} \leq$ : $z^T x\leq \|z\|_{\ast} \|x\|$ 에서 $=$ 를 만족하는 원소가 있다.
+
+1. $\| \cdot \|_{2 \ast} = \| \cdot \|_2 (=\sqrt{x^Tx})$
+   * $(\because) \ \ \| z \|_{2 \ast} = \sup \{ z^Tx : \| x \|_2 \leq 1 \} = z^T \frac{z}{\| z \|_2} = \| z \|_2$
+   * $z$랑 같은방향의 $x$
+2. $\| \cdot \|_{\infty \ast} = \| \cdot \|_{1}$
+   * $(\because) \| z \|_{\infty \ast} = \sup \{ z^Tx : \| x \|_{\infty} = 1 \}$
+   * $\| x \|_{\infty} = \max_i \vert x_i \vert$
+   * $z^Tx = z_1x_1 + z_2x_2 + \cdots + z_nx_n$ 에서 $z_i$가 음수면 $x_i=-1$, $z_i$가 양수면 $x_i=1$ ($\because \| x \|_{\infty} = 1$)로 계산하면 $\vert z_1 \vert + \vert z_2 \vert + \cdots \vert z_n \vert = \sum_i \vert z_i \vert$
+3. $\| \cdot \|_{1 \ast} = \| \cdot \|_{\infty}$
+
+---
+
+### Ex 2.25, Dual of norm cone
+
+**norm cone**
+$$K = \{ (x, t) \mid \|x\| \leq t \} \subseteq \mathbb{R}^{n+1}.$$
+
+**Dual of norm cone**
+$$K^{\ast} = \{ (u, v) \in \mathbb{R}^{n+1} \mid \|u\|_{\ast} \leq v \}$$
+
+* Dual of norm cone은 dual norm을 써서 norm cone의 공식 그대로 적으면 된다.
+
+**증명**
+
+$x^Tu + tv \geq 0 \text{ whenever } \| x \| \leq t \iff \| u \|_{*} \leq v.$
+
+$(\Leftarrow) \text{ Let } \| u \|_{*} \leq z, \text{ Pick any } \| x \| \leq t$
+
+$t=0 \rightarrow \| x \| = 0 \rightarrow x^Tu + tv \geq 0$
+
+$t > 0 \rightarrow \| - \frac{x}{t} \| \leq 1$
+
+$u^T\left( - x/t\right) \leq \| u \|_{*} \leq v$
+
+(dual norm : $\|z\|_{\ast} = \sup \{ z^T x \mid \|x\| \leq 1 \}.$)
+
+$\therefore u^Tx + vt \geq 0$
+
+$(\Rightarrow)$ Suppose $\| u \|_{*} > v \rightarrow \exist x \text{ such that } \| x \| \leq 1, x^Tu > v$
+
+$x^Tu > v \cdot 1$ 이라고 생각해보면 $-x^Tu + v \cdot 1 < 0$이 된다.
+
+이때 $x^Tu + tv \geq 0$에 $(x,t) = (-x,1)$ 를 대입하면 이는 $\|x\| \leq t$를 만족하므로 $K = \{ (x, t) \mid \|x\| \leq t \} \subseteq \mathbb{R}^{n+1}.$에 속하는데 결과로 $-x^Tu + t \cdot 1 \geq 0$와 모순이다.
+
+---
+
 Dual cones satisfy several properties, such as:
 
-- $K^*$ is closed and convex
-- $K_1 \subseteq K_2$ implies $K^*_2 \subseteq K_1^*$
-- If $K$ has nonempty interior, then $K^*$ is pointed
-- If the closure of $K$ is pointed then $K^*$ has nonempty interior.
-- $K^{**}$ is the closure of the convex hull of $K$. (Hence if $K$ is convex and closed, $K^{**} = K$.)
+* $K^*$ is closed and convex ($K$ may not be)
+* $K_1 \subseteq K_2$ implies $K^*_2 \subseteq K_1^*$
+  * 직관) 더 많은 것들에 대해 내적이 0 이상임을 만족해야 하므로 콘이 커질수록 dual cone은 작아진다.
+* If $K$ has nonempty interior, then $K^*$ is pointed
+* If the closure of $K$ is pointed then $K^*$ has nonempty interior.
+* $K^{\ast \ast}$ is the closure of the convex hull of $K$. (Hence if $K$ is convex and closed, $K^{\ast \ast} = K$.)
 
-These poperties show that if $K$ is a proper cone, then so is its dual $K^*$, and moreover, that $K^{**} = K$.
+These poperties show that if $K$ is a proper cone, then so is its dual $K^*$, and moreover, that $K^{\ast \ast} = K$.
 
 ## 2.6.2 Dual generalized inequalities
 
 suppose that the convex cone $K$ is proper.
 
-- $x \preceq_K y$ if and only if $\lambda^T x \leq \lambda^T y$ for all $\lambda \succeq_{K^*}0$
+* $x \preceq_K y$ if and only if $\lambda^T x \leq \lambda^T y$ for all $\lambda \succeq_{K^*}0$
+  * $x \preceq_K y \iff y-x \in K$
+  * $\lambda \succeq_{K^*}0 \iff \lambda \in K^{*}$
+  * dual cone에 속하는 모든 $\lambda$라는 벡터에 대해서 $\lambda^T x \leq \lambda^T y$와 같이 변형(weighting)을 취하고 나면 inequality가 성립한다.
+* $x \preceq_K y$ if and only if $\lambda^T x < \lambda^T y$ for all $\lambda \succeq_{K^*}0, \lambda \neq 0$
 
-- $x \preceq_K y$ if and only if $\lambda^T x < \lambda^T y$ for all $\lambda \succeq_{K^*}0, \lambda \neq 0$
+**증명**
+
+$x \preceq_K y$ if and only if $\lambda^T x \leq \lambda^T y$ for all $\lambda \succeq_{K^*}0$
+
+proper cone $K$와 $K^{\ast}$가 있다면
+
+Pick any $x, y$ such that $x \leq_K y (y-x \in K)$ and pick any $\lambda \in K^{\ast}\ (0 \leq_{K{\ast}} \lambda)$ then $\lambda^T(y-x) \geq 0$
+
+$\lambda^Tx \leq \lambda^Ty$
+
+dual cone의 정의, 즉 $K$에 속하는 벡터와 그 dual에 속하는 벡터는 내적을 취하면 0보다 작거나 크다
 
 ### Theorem of alternatives for linear strict generalized inequalities
 
@@ -493,8 +564,65 @@ $$ \lambda \neq 0, \quad \lambda \succeq_{K^*} 0, \quad A^T\lambda = 0, \quad \l
 
 ### Dual characterization of minimum elements
 
+> **minimum** : $x \in S$ is the ***minimum*** element of $S$ (with respect to the generalized inequality $\preceq_K$) if for every $y \in S$ we have $x \preceq_K y$.
+
 $x$ is the minimum element of $S$, with respect to the generalized inequality $\preceq_K$, if and only if for all $\lambda \succ_{K^*} 0$, $x$ is the unique minimizer of $\lambda^Tz$ over $z \in S$.
+
+minimum관계식에서는 $K$에 관한 inequality, set에 의한 포함관계였는데 ($x \preceq_K y \iff y-x \in K$) $\lambda^Tz$와 같이 scalar값으로 편하게 다룰 수 있게 된다.
+
+**증명**
+
+$(\Rightarrow) x \preceq_K z, \forall z \in S$ pick any $\lambda$ such that $\lambda \succ_{K^{\ast}}0$ ($x$ is minimum element : $x \preceq_K z, \forall z \in S$)
+
+Then $\lambda^T (z-x) > 0$
+
+$z - x \in K (\because x \succeq_K z)$, $\lambda$는 그것의 dual cone에 속한다. $(\because \lambda >_{K^{\ast}}0)$ 내적을 취하면 0보다 크거나 같아야 하지만 $\lambda \succ_{K^{\ast}}0$ 에서 등호가 없으므로 $\lambda^T (z-x) > 0$
+
+따라서 $\lambda^Tz > \lambda^Tx$
+
+$(\Leftarrow)$ Let $\lambda \succ_{K^{*}}0$ and $\lambda^Tx < \lambda^T z, \forall z \in S$
+
+Suppose $\exist z \in S \text{ such that } x\cancel{\preceq}_K z (\iff z - x \notin K)$
+
+Then $\exist \bar{\lambda} \succeq_{K^{\ast}}0 \text{ such that } \bar{\lambda}^T(z-x) < 0$
+
+Then $\exist \lambda \succ_{K^{\ast}} 0 \text{ such that } \lambda^T(z-x) < 0$ 이는 모순이다.
+
+![figure_02_23_01](/images/figure_02_23_01.png)
 
 ### Dual characterization of minimal elements
 
-If $\lambda \succ_{K^*}0$ and $x$ minimizes $\lambda^Tz$ over $z \in S$, then $x$ is minimal.
+> **minimal** : $x \in S$ is a ***minimal*** element of $S$ (with respect to the generalized inequality $\preceq_K$) if $y \in S, y \preceq_K x$ only if $y = x$.
+
+* If $\lambda \succ_{K^*}0$ and $x$ minimizes $\lambda^Tz$ over $z \in S$, then $x$ is minimal.
+
+![figure_02_24_01](/images/figure_02_24_01.png)
+
+
+$\lambda_1$ 방향의 가장 끝 반대방향으로 접하는 점이 $\lambda_1$에 대해서는 minimal point를 준다.
+
+![figure_02_26_01](/images/figure_02_26_01.png)
+
+만약 $\lambda \succ_{K^*}0$이 아니라 $\lambda \succeq_{K^*}0$ 라면 위 공간의 파란 부분이 모두 minimal point가 되는데 이것은 말이 안된다. $x_3$만이 minimal point이다. 따라서 등호가 없는 $\lambda \succ_{K^*}0$ 조건을 가진다.
+
+**증명**
+
+Let $\lambda \succ_{K^{\ast}}0 \text{ such that } \lambda^T(z-x) > 0, \  \forall z \in S$
+
+$K^{\ast}$에 $\lambda$ 가 존재해서 $\lambda^Tz$를 $S$에 대해서 minimize하고 있다
+
+suppose $x$ not minimal. ($\exist z \in S, z \neq x, z \preceq_K x$) 를 만족하는 $z$가 존재한다. $x$가 minimal이 아니라는 말은 어떤 $S$에 $z$가 존재하긴 하지만 $x-z$가 $K$에 속하면서 $x$와 $z$가 같지 않다.
+
+$S$에 속하는 $z$를 잡았는데 $z \preceq_K x$ 관계가 성립한다고 하면 $z$가 $K$에 대해 더 작다는 뜻이다. $S$에 대한 모든 원소 $z$가 $z \preceq_K x$를 만족할 필요는 없지만 만약 $z$가 $S$에 존재해서 $z \preceq_K x$ 관계가 성립한다고 하면 적어도 $x$는 minimal point이므로 $z$보다 작거나 같아야 한다. 그런데 $z \preceq_K x$가 성립한다고 하면 $z$는 $x$와 같아야 한다. 근데 같지 않다고 말한다.
+
+-> $x-z$는 $K$에 속하고 $\lambda$는 $K^{\ast}$에 속하므로 내적 취하면 $\lambda^T(x-z) > 0$ 이다. 이것은 $\lambda^T(z-x) > 0$ 가정을 위배한다.
+
+> If $\lambda \succ_{K^*}0$ and $x$ minimizes $\lambda^Tz$ over $z \in S$, then $x$ is minimal.
+
+위 조건에 convex set 조건을 추가하면 역이 성립한다.
+
+* if $x$ is minimal element of a convex set $S$, then there exists a nonzero $\lambda \succeq_{K^{\ast}}0$ such that $x$ minimizes $\lambda^Tz$ over $S$
+
+**증명**
+
+$(x-k) $
